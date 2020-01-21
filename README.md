@@ -1,2 +1,2 @@
-# rabbitmq-fmu-documentation
-The documentation for rabbitmq-fmu - A configurable FMU capable of subscribing to a rabbitMQ queue and outputting data from the queue via FMU outputs.
+# maestrov2-documentation
+Documentation for Maestro V2

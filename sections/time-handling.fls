@@ -1,0 +1,6 @@
+PWD /Users/au443759/source/into-cps-association/rabbitmq-fmu-documentation/sections
+INPUT /usr/local/texlive/2019/texmf.cnf
+INPUT /usr/local/texlive/2019/texmf-dist/web2c/texmf.cnf
+INPUT /usr/local/texlive/2019/texmf-var/web2c/pdftex/pdflatex.fmt
+INPUT time-handling.tex
+OUTPUT time-handling.log
