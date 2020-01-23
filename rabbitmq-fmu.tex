@@ -15,7 +15,8 @@
 \usepackage{tikz-uml}
 \usepackage{framed}
 \usepackage{subcaption}
-\usepackage[hyphenbreaks]{breakurl}
+% \usepackage[hyphenbreaks]{breakurl}
+\usepackage{xurl}
 \usepackage{color}
 \usepackage{amsmath}
 \usepackage{courier}
@@ -50,6 +51,29 @@
   identifierstyle=\color{darkblue},
   keywordstyle=\color{cyan},
   morekeywords={xmlns,version,type}% list your attributes here
+}
+
+\colorlet{numb}{magenta!60!black}
+\lstdefinelanguage{json}{
+    basicstyle=\normalfont\ttfamily,
+    stringstyle=\color{black}, % style of strings
+      identifierstyle=\color{darkblue},
+    showstringspaces=false,
+    breaklines=true,
+    string=[s]{"}{"},
+    comment=[l]{:\ "},
+    morecomment=[l]{:"},
+    literate=
+        *{0}{{{\color{numb}0}}}{1}
+         {1}{{{\color{numb}1}}}{1}
+         {2}{{{\color{numb}2}}}{1}
+         {3}{{{\color{numb}3}}}{1}
+         {4}{{{\color{numb}4}}}{1}
+         {5}{{{\color{numb}5}}}{1}
+         {6}{{{\color{numb}6}}}{1}
+         {7}{{{\color{numb}7}}}{1}
+         {8}{{{\color{numb}8}}}{1}
+         {9}{{{\color{numb}9}}}{1}
 }
 
 
@@ -99,7 +123,9 @@ Cl\'audio Gomes, Aarhus University, Centre for Digital Twins
 %
 %
 \editors{
-  Casper Thule, Aarhus University, Centre for Digital Twins
+Casper Thule, Aarhus University, Centre for Digital Twins
+Kenneth Lausdahl, Mj{\o}lner Informatics A/S \\
+Cl\'audio Gomes, Aarhus University, Centre for Digital Twins
 }
 %
 %
@@ -166,7 +192,11 @@ scenario tied to it.
 \clearpage
 \input{sections/configuration.tex}
 \clearpage
-\input{sections/example.tex}
+\input{sections/example-watertank.tex}
+\clearpage
+\input{sections/example-lfr.tex}
+\clearpage
+\input{sections/future_work.tex}
 %
 %
 %
