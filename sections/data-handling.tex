@@ -1,9 +1,11 @@
 \section{Data Handling}\label{sec:data_handling}
-The data handling occuring within \texttt{fmi2DoStep} of EDB FMU is described
+The data handling occurring within \texttt{fmi2DoStep} of EDB FMU is described
 below.
 All values of messages with time stamps (converted to simulation time) within the
 time interval $]currentSimulationTime,currentSimulationTime + simulationStepSize]$
-overrides the current state of values in the received order.
+overrides the current state of values in the received order, thus using
+zero-order hold. This depends on the Data Middleware Node providing the data in
+order according to time, as mentioned in TODO.
 
 An example is given in \cref{fig:data-handling-dostep}.
 First, \texttt{message x} is received and overwrites the value of \texttt{a} in the EDB FMU state.\\

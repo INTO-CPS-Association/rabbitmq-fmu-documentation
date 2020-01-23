@@ -1,0 +1,103 @@
+\section{Configuration}\label{sec:configuration}
+This section covers how to configure an EDB FMU based on the RabbitMQ
+implementation.
+The data format of the messages is JavaScript Object Notation (JSON), which is
+based on key/value pairs.
+
+There are two key parts of the configuration: Configuring the data source and
+configuring the FMI outputs. The data source configuration specifies connection
+details related to the RabbitMQ server.
+The FMI outputs configuration specifies which key/value pairs of the messages to
+use.
+
+This require changes to the FMU, but only to the static description file within
+the FMU. Thus, the precompiled binary still works, since it parses the static
+description file initially. Since RabbitMQ FMU has to parse the static
+description file it is necessary to store a copy of the model description file
+within the resources folder of the FMU.
+
+\subsection{Configuring the Data Source}
+The data source is configured via FMI parameters, as these can be set externally
+before \texttt{fmi2EnterInitializationMode}\footnote{This does not hold for all
+  scalar variables with parameter as causality. Check the FMI standard to ensure that you have the correct configuration.}. For this reason, it is possible to
+either preconfigure the parameters in the static description file in the
+resources folder of the FMU or set the values during execution of the FMU.
+
+\Cref{lst:data-source-config} presents an example of configuring the data
+source. Notice the combination of \texttt{causality="parameter"} and
+\texttt{variability="fixed"} which implies that it is possible to set the values
+before \texttt{fmi2EnterInitiali\-za\-tion\-Mode}, as it is necessary since a start
+message is expected in the execution of \texttt{fmi2EnterInitializationMode} as
+described in \cref{sec:time_handling}.
+\lstset{
+%  basicstyle=\ttfamily,
+%  columns=fullflexible,
+%  frame=single,
+  postbreak=\raisebox{0ex}[0ex][0ex]
+  {\ensuremath{\rcurvearrowse\space}},
+  breakatwhitespace=true,
+  breaklines=true,
+  numbers=left,
+  numberstyle=\scriptsize,
+  frame=single
+%  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\begin{lstlisting}[label={lst:data-source-config},caption={Data source
+    configuration of RabbitMQ FMU},language=XML]
+<ScalarVariable name="config.hostname" valueReference="0" variability="fixed" causality="parameter">
+    <String start="localhost"/>
+</ScalarVariable>
+<ScalarVariable name="config.port" valueReference="1" variability="fixed" causality="parameter">
+    <Integer start="5672"/>
+</ScalarVariable>
+<ScalarVariable name="config.username" valueReference="2" variability="fixed" causality="parameter">
+    <String start="guest"/>
+</ScalarVariable>
+<ScalarVariable name="config.password" valueReference="3" variability="fixed" causality="parameter">
+    <String start="guest"/>
+</ScalarVariable>
+<ScalarVariable name="config.routingkey" valueReference="4" variability="fixed" causality="parameter">
+    <String start="linefollower"/>
+</ScalarVariable>
+<ScalarVariable name="config.communicationtimeout" valueReference="6" variability="fixed" causality="parameter" description="Network read time out in seconds">
+    <Integer start="60"/>
+</ScalarVariable>
+  \end{lstlisting}
+
+
+\subsection{Configuring the FMI Outputs}
+The scalar variables with \texttt{causality="output"} within the static
+description are used by RabbitMQ FMU to define which key/value pairs to extract
+from the messages that it receives. Thus, the name attribute of the output
+scalar variable defines the key, whose paired value should be outputted as the
+given scalar variable. Furthermore, the type of the value type must match the type of the
+output scalar variable. An example is presented in \cref{lst:fmi-outputs-config}
+where a single output of type \texttt{Real} is defined. Note, that the output
+scalar variable must be added to the \texttt{Outputs} element based on index as
+required by FMI, see \cref{lst:fmi-outputs-config2}. The name of the output scalar variable matches the
+key/value pair \texttt{"level"} of a message such as the one exemplified in \cref{lst:message-example}
+
+\begin{lstlisting}[label={lst:fmi-outputs-config},caption={FMI Outputs scalar
+    variable configuration of RabbitMQ FMU},language=XML]
+<!-- index=1 -->
+<ScalarVariable name="level" valueReference="20" variability="continuous" causality="output">
+    <Real />
+</ScalarVariable>
+\end{lstlisting}
+\begin{lstlisting}[label={lst:fmi-outputs-config2},caption={FMI Outputs index
+    configuration of RabbitMQ FMU },language=XML]
+<Outputs>
+    <Unknown index="1"/>
+</Outputs>
+\end{lstlisting}
+
+\begin{lstlisting}[label={lst:message-example},caption={Example of a JSON message.},language=JSON]
+{"time": 321, "level": 3.2}
+  \end{lstlisting}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../rabbitmq-fmu"
+%%% End:

@@ -27,7 +27,7 @@
 \usepackage[section]{placeins}
 \usepackage{listings}
 \usepackage{glossaries}
-
+\usepackage{MnSymbol}
 %% Define listing environment for XML
 \definecolor{gray}{rgb}{0.4,0.4,0.4}
 \definecolor{darkblue}{rgb}{0.0,0.0,0.6}
@@ -39,7 +39,8 @@
   showstringspaces=false,
   commentstyle=\color{gray}\upshape
 }
-
+\crefname{lstlisting}{Listing}{Listings}
+\Crefname{lstlisting}{Listing}{Listings}
 \lstdefinelanguage{XML}
 {
   morestring=[b]",
@@ -76,7 +77,7 @@
 %
 %%% Set document release class as appropriate
 %%% e.g. Public, Restricted, Programme Participant
-\reportstatus{Public Draft}
+\reportstatus{Public}
 %
 %
 %
@@ -90,15 +91,15 @@
 %
 \submissiondate{}
 \contributors{
-Kenneth Lausdahl, AU \\
-Casper Thule, AU
+Casper Thule, Aarhus University, Centre for Digital Twins \\
+Kenneth Lausdahl, Mj{\o}lner Informatics A/S \\
+Cl\'audio Gomes, Aarhus University, Centre for Digital Twins
 }
 %
 %
 %
 \editors{
-  Casper Thule, AU \\
-  Kenneth Lausdahl, Mj\olner Informatics A/S
+  Casper Thule, Aarhus University, Centre for Digital Twins
 }
 %
 %
@@ -114,7 +115,7 @@ Casper Thule, AU
 % #2: date
 % #3: author
 % #4: description
-\addversion{0.01}{January 13, 2019}{Casper Thule}{Initial Version.}
+\addversion{1.0}{January 23, 2019}{Casper Thule}{First version.}
 
 %
 %
@@ -127,7 +128,21 @@ Casper Thule, AU
 \section*{Abstract}
 \label{sec:abstract}
 %
-TBD
+This document concerns an implementation of an External Data Broker (EDB) FMU based on
+RabbitMQ. An EDB FMU brings external data into an FMI context by receiving data
+external to the FMI simulation and make it available via FMI outputs. The
+specific RabbitMQ based implementation is realised in RabbitMQ FMU.
+
+Several of the constructs in the approach presented in this publication is general and can applied to multiple
+cases. For example, the RabbitMQ FMU can be adapted to process different messages by
+making changes to its static description file, without the need to recompile the
+binaries, which are already compiled for Mac, Linux and Windows. Additionally, the implementation can be made to fit other message-oriented or
+data-stream middlewares while still reusing most of the source.
+
+As such, while RabbitMQ FMU is exemplified with a certain scenario, it can be applied generally and does not have a specific
+scenario tied to it.
+
+
 %
 \newpage
 %
@@ -149,6 +164,9 @@ TBD
 \newpage
 \input{sections/data-handling.tex}
 \clearpage
+\input{sections/configuration.tex}
+\clearpage
+\input{sections/example.tex}
 %
 %
 %
