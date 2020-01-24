@@ -35,9 +35,17 @@ The example setup is shown in \cref{fig:rabbitmq-example} and consists of:
   \label{fig:rabbitmq-example}
 \end{figure}
 
-The result of executing the co-simulation is shown in TODO XX. The discrepancies
+The result of executing the co-simulation is shown in \cref{fig:modelled-tank-vs-rabbitmq-fmu-tank}. The discrepancies
 between the Tank FMU output and the RabbitMQ FMU output is related to
-floating-point imprecision.
+floating-point imprecision and is being investigated further.
+\begin{figure}[!htb]
+  \centering
+  \includegraphics[width=\textwidth]{figures/lfmqtt.png}
+  \caption{Modeled tank output and RabbitMQ FMU tank output}
+  \label{fig:modelled-tank-vs-rabbitmq-fmu-tank}
+\end{figure}
+
+
 
 
 

@@ -4,8 +4,8 @@ below.
 All values of messages with time stamps (converted to simulation time) within the
 time interval $]currentSimulationTime,currentSimulationTime + simulationStepSize]$
 overrides the current state of values in the received order, thus using
-zero-order hold. This depends on the Data Middleware Node providing the data in
-order according to time, as mentioned in TODO.
+zero-order hold. This depends on the Data Middleware Node providing the data
+order by time, as mentioned in \cref{sec:intro}.
 
 An example is given in \cref{fig:data-handling-dostep}.
 First, \texttt{message x} is received and overwrites the value of \texttt{a} in the EDB FMU state.\\
