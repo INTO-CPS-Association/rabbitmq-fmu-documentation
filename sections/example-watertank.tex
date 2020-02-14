@@ -37,7 +37,9 @@ The example setup is shown in \cref{fig:rabbitmq-example} and consists of:
 
 The result of executing the co-simulation is shown in \cref{fig:modelled-tank-vs-rabbitmq-fmu-tank}. The discrepancies
 between the Tank FMU output and the RabbitMQ FMU output is related to
-floating-point imprecision and is being investigated further.
+floating-point imprecision\footnote{See \cite{Cremona2019} for more information on floating-point
+  imprecision in relation to FMI.}. By changing the \texttt{precision} as described in
+\cref{subsec:cqa} there are no discrepancies.
 \begin{figure}[!htb]
   \centering
   \includegraphics[width=\textwidth]{figures/lfmqtt.png}

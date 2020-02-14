@@ -1,11 +1,16 @@
-\section{Future Work}\label{sec:future_work}
+\section{Concluding Remarks and Future Work}\label{sec:conclusion-future_work}
 This section is not to be considered final and is subject to change in future revisions.
 
-Some of the immediate future work is making the current research available at
-the INTO-CPS Association github: \url{https://github.com/INTO-CPS-Association/}.
+The configuration of the quality attribute \texttt{Precision} described in \cref{subsec:cqa}has been added to
+RabbitMQ FMU due to experiments. In co-simulations with no relation to elements
+external to the co-simulation, the imprecision of floating-point numbers in
+relation to communication from master to slave will be the same throughout.
+However, once slaves are communicating with the external world, this becomes a
+very important consideration and can lead to discrepancies as presented in \cref{sec:example-watertank}.
 
-Other immediate future work is related to the LFR example, which was described
-in \cref{sec:example-lfr}, and it is described at: \url{https://github.com/INTO-CPS-Association/example-DT-line_following_robot/issues}
+The immediate future work is related to experiments, i.e. as described in
+\cref{sec:example-lfr}. It is expected that such experiments will lead to
+additional requirements.
 
 %%% Local Variables:
 %%% mode: latex

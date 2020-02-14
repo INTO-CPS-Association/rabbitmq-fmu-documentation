@@ -4,10 +4,11 @@ implementation.
 The data format of the messages is JavaScript Object Notation (JSON), which is
 based on key/value pairs.
 
-There are two key parts of the configuration: Configuring the data source and
-configuring the FMI outputs. The data source configuration specifies connection
-details related to the RabbitMQ server.
-The FMI outputs configuration specifies which key/value pairs of the messages to
+There are three key parts of the configuration: Configuring the data source connection,
+configuring the behaviour of RabbitMQ FMU and
+configuring the FMI outputs. The data source connection configuration specifies connection
+details related to the RabbitMQ server. The behaviour configuration makes it
+possible to alter quality attributes of RabbitMQ FMU. The FMI outputs configuration specifies which key/value pairs of the messages to
 use.
 
 This require changes to the FMU, but only to the static description file within
@@ -16,10 +17,10 @@ description file initially. Since RabbitMQ FMU has to parse the static
 description file it is necessary to store a copy of the model description file
 within the resources folder of the FMU.
 
-\subsection{Configuring the Data Source}
-The data source is configured via FMI parameters, as these can be set externally
+\subsection{Configuring the Data Source Connection}
+The data source connection is configured via FMI parameters, as these can be set externally
 before \texttt{fmi2EnterInitializationMode}\footnote{This does not hold for all
-  scalar variables with parameter as causality. Check the FMI standard to ensure that you have the correct configuration.}. For this reason, it is possible to
+  scalar variables with parameter as causality. Consult the FMI standard to ensure that you have the correct configuration.}. For this reason, it is possible to
 either preconfigure the parameters in the static description file in the
 resources folder of the FMU or set the values during execution of the FMU.
 
@@ -42,7 +43,7 @@ described in \cref{sec:time_handling}.
   frame=single
 %  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
 }
-\begin{lstlisting}[label={lst:data-source-config},caption={Data source
+\begin{lstlisting}[label={lst:data-source-config},caption={Data source connection
     configuration of RabbitMQ FMU},language=XML]
 <ScalarVariable name="config.hostname" valueReference="0" variability="fixed" causality="parameter">
     <String start="localhost"/>
@@ -65,7 +66,7 @@ described in \cref{sec:time_handling}.
   \end{lstlisting}
 
 
-\subsection{Configuring the FMI Outputs}
+\subsection{Configuring  FMI Outputs}
 The scalar variables with \texttt{causality="output"} within the static
 description are used by RabbitMQ FMU to define which key/value pairs to extract
 from the messages that it receives. Thus, the name attribute of the output
@@ -95,7 +96,18 @@ key/value pair \texttt{"level"} of a message such as the one exemplified in \cre
 {"time": 321, "level": 3.2}
   \end{lstlisting}
 
+\subsection{Configuring Quality Attributes}
+\label{subsec:cqa}
+Precision is related to the communication step size passed to the function
+\texttt{fmi2DoStep} of RabbitMQ FMU. See the description within the
+\texttt{Scalar\-Variable} in \cref{lst:quality-attributes-config}.
 
+\begin{lstlisting}[label={lst:quality-attributes-config},caption={Behaviour
+configuration of RabbitMQ FMU},language=XML]
+<ScalarVariable name="config.precision" valueReference="6" variability="fixed" causality="parameter" description="Communication step comparison precision. Number of decimals to consider" initial="exact">
+    <Integer start="10"/>
+</ScalarVariable>
+  \end{lstlisting}
 
 %%% Local Variables:
 %%% mode: latex
